@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>yutori</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,600;1,9..144,480&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg__wash" id="bgWash"></div>
+  <svg class="bg__grain" width="100%" height="100%">
+    <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter>
+    <rect width="100%" height="100%" filter="url(#noise)"/>
+  </svg>
+  <div class="bg__vignette"></div>
+</div>
+
+<div class="shell">
+
+  <div class="brand">
+    <div class="brand__mark">
+      <svg class="brand__glyph" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10.5" stroke="var(--gold)" stroke-width="1.3"/>
+        <circle cx="12" cy="9.5" r="3.4" fill="var(--gold)"/>
+        <path d="M2.5 16.5C5 14 8.5 12.8 12 12.8s7 1.2 9.5 3.7" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__word">yutori </span>
+    </div>
+    <span class="brand__tag">Your sound, your hour</span>
+    <button class="add-btn grow-hover" id="addBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      Add music
+    </button>
+  </div>
+
+  <div class="stage" id="stage" role="listbox" aria-label="Album selector"></div>
+
+  <div class="dock is-disabled" id="dock">
+    
+    <!-- Moved Meta Section -->
+    <div class="pill__meta" id="standaloneMeta">
+      <div class="pill__title" id="pillTitle">Add a track to begin</div>
+      <div class="pill__artist" id="pillArtist">—</div>
+    </div>
+
+    <div class="seek" id="seek" role="slider" aria-label="Seek" tabindex="0">
+      <div class="seek__fill" id="seekFill"></div>
+      <div class="seek__thumb" id="seekThumb"></div>
+    </div>
+    
+    <div class="time"><span id="curTime">0:00</span><span id="durTime">0:00</span></div>
+
+    <div class="pill">
+      <div class="pill__thumb" id="pillThumb"></div>
+
+      <div class="viz" id="viz" aria-hidden="true"></div>
+
+      <div class="transport">
+        <button class="icon-btn" id="prevBtn" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+        </button>
+        <button class="icon-btn icon-btn--play grow-hover" id="playBtn" aria-label="Play">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7z"/></svg>
+        </button>
+        <button class="icon-btn" id="nextBtn" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 5h-2v14h2zM4 5v14l11-7z"/></svg>
+        </button>
+      </div>
+
+      <div class="aux">
+        <button class="icon-btn" id="likeBtn" aria-label="Like">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.2 2.3 4.9 5.7 4.4c2-.3 3.9.6 5 2.2 1.1-1.6 3-2.5 5-2.2 3.4.5 5.3 3.8 3.7 7.4C19.5 16.4 12 21 12 21z"/></svg>
+        </button>
+        <button class="icon-btn" id="shuffleBtn" aria-label="Shuffle">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h3.6l7 12H18v3l4-4-4-4v3h-2.4l-7-12H4zM14.6 6H18V3l4 4-4 4V8h-2.4l-1.8-3.1z"/></svg>
+        </button>
+        <button class="icon-btn" id="repeatBtn" aria-label="Repeat">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg>
+        </button>
+        <div class="volume">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--cream-dim)"><path d="M3 10v4h4l5 5V5L7 10z"/></svg>
+          <input type="range" id="volumeSlider" min="0" max="100" value="100" aria-label="Volume">
+        </div>
+        <!-- Menu Wrap remains unchanged below -->
+        <!-- ... -->
+        <div class="menu-wrap">
+          <button class="icon-btn" id="menuBtn" aria-label="More options">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
+          </button>
+          <div class="menu" id="menu">
+            <button type="button" data-action="add">Add music</button>
+            <button type="button" data-action="remove">Remove from playlist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="playlist-wrap is-disabled grow-hover" id="playlistWrap">
+    <div class="playlist-wrap__head">
+      <span class="playlist-wrap__title">Playlist</span>
+      <span class="playlist-wrap__count" id="playlistCount">0 tracks</span>
+    </div>
+    <div class="playlist" id="playlist" role="listbox" aria-label="Playlist"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<input type="file" id="fileInput" accept="audio/*" multiple hidden>
+<audio id="audio" preload="metadata"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.7/dist/jsmediatags.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
